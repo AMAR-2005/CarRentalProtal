@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 import jakarta.persistence.*;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class RentalCompany {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "rental_id")
@@ -16,36 +19,36 @@ public class RentalCompany {
     //private Vehicle vehicles;
 
 
-    public RentalCompany() {
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public RentalCompany(int id, String companyName, String location) {
-        this.id = id;
-        this.companyName = companyName;
-        this.location = location;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getCompanyName() {
-        return companyName;
-    }
-
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
+//    public RentalCompany() {
+//    }
+//
+//    public int getId() {
+//        return id;
+//    }
+//
+//    public RentalCompany(int id, String companyName, String location) {
+//        this.id = id;
+//        this.companyName = companyName;
+//        this.location = location;
+//    }
+//
+//    public void setId(int id) {
+//        this.id = id;
+//    }
+//
+//    public String getCompanyName() {
+//        return companyName;
+//    }
+//
+//    public void setCompanyName(String companyName) {
+//        this.companyName = companyName;
+//    }
+//
+//    public String getLocation() {
+//        return location;
+//    }
+//
+//    public void setLocation(String location) {
+//        this.location = location;
+//    }
 }
