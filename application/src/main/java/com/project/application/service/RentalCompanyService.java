@@ -53,5 +53,7 @@ public class RentalCompanyService {
          return rentalCompanyRepository.findBylocation(location,pageable);
      }
 
-
+    public List<RentalCompany> getRentalCompanyByLocation(String location) {
+        return rentalCompanyRepository.findRentalCompaniesByLocation(location);
+    }
 }

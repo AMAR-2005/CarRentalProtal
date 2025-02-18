@@ -61,7 +61,7 @@ public class RentalCompanyController {
                 : ResponseEntity.status(HttpStatus.NOT_FOUND).body("Rental Company deletion failed");
     }
 
-    @GetMapping("/getRental")
+    @GetMapping("/rentalcompanies/paginated")
     public Page<RentalCompany> getPaginatedRentalCompanies(@RequestParam int page,@RequestParam int size){
         return rentalCompanyService.getPaginatedRentalCompanies(page,size);
     }
@@ -70,6 +70,10 @@ public class RentalCompanyController {
      public Page<RentalCompany> getPaginatedRentalCompaniesBylocation(@RequestParam String location,@RequestParam int page,@RequestParam int size){
          return rentalCompanyService.getPaginatedRentalCompaniesBylocation(location,page,size);
      }
+    @GetMapping(path = "/rentalcompanies/find")
+    public List<RentalCompany> getRentalCompaniesByLocation(@RequestParam String location){
+        return rentalCompanyService.getRentalCompanyByLocation(location);
+    }
 
 
 }
