@@ -1,8 +1,13 @@
 package com.project.application.service;
 
+import com.project.application.model.User;
 import com.project.application.model.Vehicle;
 import com.project.application.repository.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,6 +38,16 @@ public class VehicleService {
         }
         return false;
     }
+    public boolean deleteVehicleByModel(String model) {
+
+        if(vehicleRepository.deleteByModel(model)!=0)
+                return true;
+        return false;
+
+    }
+    public List<Vehicle> getSortedVehicles() {
+        return vehicleRepository.findAll(Sort.by("ratePerDay").ascending());
+    }
 
     public Vehicle updateVehicle(int id, Vehicle vehicle) {
        vehicle.setId(id);
@@ -40,4 +55,8 @@ public class VehicleService {
     }
 
 
+    public Page<Vehicle> getPageVehicle(int page, int size) {
+        Pageable pageable= PageRequest.of(page,size);
+        return vehicleRepository.findAll(pageable);
+    }
 }

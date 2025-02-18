@@ -15,6 +15,6 @@ import java.util.List;
 public interface RentalCompanyRepository extends JpaRepository<RentalCompany,Integer> {
     Page<RentalCompany> findBylocation(String location,Pageable pageable);
 
-//    @Query("select r from RentalCompany r where r.location=:location")
+    @Query("select r from RentalCompany r where r.location=:location")
     List<RentalCompany> findRentalCompaniesByLocation(@Param("location") String location);
 }

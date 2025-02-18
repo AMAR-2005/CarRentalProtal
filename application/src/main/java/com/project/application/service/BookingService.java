@@ -2,8 +2,13 @@ package com.project.application.service;
 
 
 import com.project.application.model.Booking;
+import com.project.application.model.RentalCompany;
 import com.project.application.repository.BookingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,6 +38,12 @@ public class BookingService {
         }
         return null;
     }
+    public List<Booking> orderByAmount(){
+        return bookingRepo.orderByAmount();
+    }
+    public List<Booking> getSortedBooking() {
+        return bookingRepo.findAll(Sort.by("startDate").ascending());
+    }
 
     public boolean deleteBooking(int id) {
         if(bookingRepo.existsById(id)){
@@ -42,4 +53,8 @@ public class BookingService {
         return false;
     }
 
+    public Page<Booking> getPageBookings(int page, int size) {
+        Pageable pageable= PageRequest.of(page, size);
+        return bookingRepo.findAll(pageable);
+    }
 }

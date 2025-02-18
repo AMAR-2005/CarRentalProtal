@@ -2,6 +2,7 @@ package com.project.application.controller;
 
 
 import com.project.application.model.RentalCompany;
+import com.project.application.model.User;
 import com.project.application.service.RentalCompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,15 +28,17 @@ public class RentalCompanyController {
 
     @GetMapping(path = "/rentalcompanies/{id}")
     public ResponseEntity<?> getRentalCompanyById(@PathVariable int id) {
-
         Optional<RentalCompany> rentalCompany = rentalCompanyService.getRentalCompanyById(id);
-
         if (rentalCompany.isPresent()) {
             return ResponseEntity.status(HttpStatus.OK).body(rentalCompany.get()); 
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("Rental Company with ID " + id + " not found"); 
         }
+    }
+    @GetMapping(path = "/sortedRental")
+    public List<RentalCompany> getSortedUsers(){
+        return rentalCompanyService.getSortedRentalCompanies();
     }
 
     @PostMapping(path = "/rentalcompanies")

@@ -2,6 +2,7 @@ package com.project.application.service;
 
 
 import com.project.application.model.RentalCompany;
+import com.project.application.model.Vehicle;
 import com.project.application.repository.RentalCompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -46,6 +47,9 @@ public class RentalCompanyService {
     public Page<RentalCompany> getPaginatedRentalCompanies(int page, int size) {
         Pageable pageable =PageRequest.of(page, size,Sort.by("CompanyName").ascending());
         return rentalCompanyRepository.findAll(pageable);
+    }
+    public List<RentalCompany> getSortedRentalCompanies() {
+        return rentalCompanyRepository.findAll(Sort.by("companyName").ascending());
     }
 
      public Page<RentalCompany> getPaginatedRentalCompaniesBylocation(String location, int page, int size) {
