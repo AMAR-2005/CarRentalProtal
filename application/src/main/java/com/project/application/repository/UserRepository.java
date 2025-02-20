@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 public interface UserRepository extends JpaRepository<User,Integer>{
-    
+    List<User> findByname(String name);
     @Query("SELECT u FROM User u WHERE u.name LIKE %:name% ")
     List<User> findNameContained(@Param("name") String name);
 }

@@ -13,6 +13,8 @@ import java.util.List;
 
 @Repository
 public interface RentalCompanyRepository extends JpaRepository<RentalCompany,Integer> {
+    List<RentalCompany> findBycompanyName(String companyName);
+
     Page<RentalCompany> findBylocation(String location,Pageable pageable);
 
     @Query("select r from RentalCompany r where r.location=:location")

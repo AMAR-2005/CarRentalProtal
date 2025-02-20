@@ -35,10 +35,18 @@ public class BookingController {
     public List<Booking> getSortedUsers(){
         return bookingService.getSortedBooking();
     }
-    @PostMapping(path = "/bookings/{id}")
-    public Booking createBooking(@PathVariable int id,@RequestBody Booking booking){
-        return bookingService.addBooking(id,booking);
+    @PostMapping(path = "/bookings")
+    public Booking createBooking(@RequestBody Booking booking){
+        return bookingService.addBooking(booking);
     }
+    @PostMapping(path = "/bookings/mutil")
+    public List<Booking> createBooking(@RequestBody List<Booking> booking){
+        return bookingService.addMultipleBooking(booking);
+    }
+//    @PostMapping(path = "/bookings/{id}")
+//    public Booking createBooking(@PathVariable int id,@RequestBody Booking booking){
+//        return bookingService.addBooking(id,booking);
+//    }
     @PutMapping(path = "/bookings/{id}")
     public Booking updateBooking(@PathVariable int id, @RequestBody Booking booking){
         return bookingService.updateBooking(id,booking);
@@ -51,5 +59,9 @@ public class BookingController {
     @DeleteMapping(path = "/bookings/{id}")
     public ResponseEntity<String> deleteBooking(@PathVariable int id){
         return bookingService.deleteBooking(id) ? ResponseEntity.status(HttpStatus.OK).body("Booking deleted successfully"): ResponseEntity.status(HttpStatus.NOT_FOUND).body("Booking not deleted");
+    }
+    @GetMapping("/bookings/insurance")
+    public List<Booking> getBookingsWithInsurance(@RequestParam boolean included) {
+        return bookingService.getBookingsByInsuranceIncluded(included);
     }
 }

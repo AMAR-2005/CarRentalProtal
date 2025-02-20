@@ -9,8 +9,11 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Repository
 public interface VehicleRepository extends JpaRepository<Vehicle,Integer>{
+    List<Vehicle> findBymodel(String model);
     @Modifying
     @Transactional
     @Query("DELETE FROM Vehicle v WHERE v.model = :model")

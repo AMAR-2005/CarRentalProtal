@@ -31,17 +31,17 @@ public class BookingService {
         return bookingRepo.findById(id);
     }
 
-    public Booking addBooking(int id,Booking booking) {
-//        Optional<User> opt= userRepository.findById(id);
-//        if(!opt.isEmpty()){
-//            User user=opt.get();
-//            booking.setUser(user);
-            return bookingRepo.save(booking);
-//        }
-//        else{
-//            throw new RuntimeException("User Not found :"+id);
-//        }
-    }
+//    public Booking addBooking(int id,Booking booking) {
+////        Optional<User> opt= userRepository.findById(id);
+////        if(!opt.isEmpty()){
+////            User user=opt.get();
+////            booking.setUser(user);
+//            return bookingRepo.save(booking);
+////        }
+////        else{
+////            throw new RuntimeException("User Not found :"+id);
+////        }
+//    }
 
     public Booking updateBooking(int id, Booking booking) {
         if(bookingRepo.existsById(id)){
@@ -68,5 +68,16 @@ public class BookingService {
     public Page<Booking> getPageBookings(int page, int size) {
         Pageable pageable= PageRequest.of(page, size);
         return bookingRepo.findAll(pageable);
+    }
+
+    public Booking addBooking(Booking booking) {
+        return bookingRepo.save(booking);
+    }
+
+    public List<Booking> addMultipleBooking(List<Booking> booking) {
+        return bookingRepo.saveAll(booking);
+    }
+    public List<Booking> getBookingsByInsuranceIncluded(boolean insuranceIncluded) {
+        return bookingRepo.findByinsuranceIncluded(insuranceIncluded);
     }
 }

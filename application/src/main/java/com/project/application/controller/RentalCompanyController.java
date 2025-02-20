@@ -1,6 +1,7 @@
 package com.project.application.controller;
 
 
+import com.project.application.model.Booking;
 import com.project.application.model.RentalCompany;
 import com.project.application.model.User;
 import com.project.application.service.RentalCompanyService;
@@ -26,6 +27,11 @@ public class RentalCompanyController {
         return rentalCompanyService.getAllRentalCompanies();
     }
 
+    @GetMapping("/rentalcompanies/by-name")
+    public List<RentalCompany> getRentalCompaniesByName(@RequestParam String name) {
+        return rentalCompanyService.getRentalCompaniesByName(name);
+    }
+
     @GetMapping(path = "/rentalcompanies/{id}")
     public ResponseEntity<?> getRentalCompanyById(@PathVariable int id) {
         Optional<RentalCompany> rentalCompany = rentalCompanyService.getRentalCompanyById(id);
@@ -44,6 +50,10 @@ public class RentalCompanyController {
     @PostMapping(path = "/rentalcompanies")
     public RentalCompany createRentalCompany(@RequestBody RentalCompany rentalCompany) {
         return rentalCompanyService.createRentalCompany(rentalCompany);
+    }
+    @PostMapping(path = "/rentalcompanies/mutil")
+    public List<RentalCompany> createBooking(@RequestBody List<RentalCompany> rentalcompanies){
+        return rentalCompanyService.addMultipleRentalCompany(rentalcompanies);
     }
 
     @PutMapping(path = "/rentalcompanies/{id}")

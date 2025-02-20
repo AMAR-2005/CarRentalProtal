@@ -59,4 +59,11 @@ public class VehicleService {
         Pageable pageable= PageRequest.of(page,size);
         return vehicleRepository.findAll(pageable);
     }
+
+    public List<Vehicle> addMultipleVehicle(List<Vehicle> vehicle) {
+        return vehicleRepository.saveAll(vehicle);
+    }
+    public List<Vehicle> getVehiclesByModel(String model) {
+        return vehicleRepository.findBymodel(model);
+    }
 }

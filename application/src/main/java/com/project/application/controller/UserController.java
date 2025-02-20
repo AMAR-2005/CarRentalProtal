@@ -1,6 +1,8 @@
 package com.project.application.controller;
 
 
+import com.project.application.model.Booking;
+import com.project.application.model.RentalCompany;
 import com.project.application.model.User;
 import com.project.application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,10 @@ public class UserController {
         return obj.getAllUsers();
     }
 
+    @GetMapping("/users/by-name")
+    public List<User> getUsersByName(@RequestParam String name) {
+        return obj.getUsersByName(name);
+    }
     @GetMapping(path = "/users/{id}")
     public Optional<User> getUserById(@PathVariable int id){
         return obj.getUsersById(id);
@@ -30,6 +36,10 @@ public class UserController {
     @PostMapping(path = "/users")
     public User createUser(@RequestBody User u){
         return obj.createUser(u);
+    }
+    @PostMapping(path = "/users/mutil")
+    public List<User> createBooking(@RequestBody List<User> user){
+        return obj.addMultipleUsers(user);
     }
     @PutMapping(path = "/users/{id}")
     public User updateUser(@PathVariable int id, @RequestBody User u){

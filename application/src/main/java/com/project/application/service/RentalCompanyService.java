@@ -60,4 +60,11 @@ public class RentalCompanyService {
     public List<RentalCompany> getRentalCompanyByLocation(String location) {
         return rentalCompanyRepository.findRentalCompaniesByLocation(location);
     }
+    public List<RentalCompany> getRentalCompaniesByName(String companyName) {
+        return rentalCompanyRepository.findBycompanyName(companyName);
+    }
+
+    public List<RentalCompany> addMultipleRentalCompany(List<RentalCompany> rentalcompanies) {
+        return  rentalCompanyRepository.saveAll(rentalcompanies);
+    }
 }

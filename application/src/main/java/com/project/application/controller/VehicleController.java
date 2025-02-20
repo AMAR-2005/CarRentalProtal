@@ -48,6 +48,10 @@ public class VehicleController {
         return vehicleService.getSortedVehicles();
     }
 
+    @GetMapping("/vehicle/by-model")
+    public List<Vehicle> getVehiclesByModel(@RequestParam String model) {
+        return vehicleService.getVehiclesByModel(model);
+    }
     @PutMapping(path = "/vehicle/{id}")
     public Vehicle updateVehicle(@PathVariable int id,@RequestBody Vehicle vehicle){
         return vehicleService.updateVehicle(id,vehicle);
@@ -56,6 +60,11 @@ public class VehicleController {
     @PostMapping(path = "/vehicle")
     public Vehicle createVehicle(@RequestBody Vehicle vehicle) {
         return vehicleService.createVehicle(vehicle);
+    }
+
+    @PostMapping(path = "/vehicle/mutil")
+    public List<Vehicle> createBooking(@RequestBody List<Vehicle> vehicle){
+        return vehicleService.addMultipleVehicle(vehicle);
     }
 
     @DeleteMapping(path = "/vehicle/{id}")

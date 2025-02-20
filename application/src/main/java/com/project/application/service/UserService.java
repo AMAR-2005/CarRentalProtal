@@ -101,5 +101,10 @@ public class UserService {
         return repo.findNameContained(name);
     }
 
-
+    public List<User> getUsersByName(String name) {
+        return repo.findByname(name);
+    }
+    public List<User> addMultipleUsers(List<User> user) {
+        return repo.saveAll(user);
+    }
 }

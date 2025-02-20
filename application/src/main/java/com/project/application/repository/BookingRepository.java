@@ -12,6 +12,9 @@ import java.util.List;
 
 @Repository
 public interface BookingRepository extends JpaRepository<Booking,Integer> {
+    List<Booking> findByinsuranceIncluded(boolean insuranceIncluded);
+
     @Query("select b from Booking b order by b.totalAmount desc limit 3")
     List<Booking> orderByAmount();
+
 }
