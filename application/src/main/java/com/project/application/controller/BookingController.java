@@ -35,9 +35,9 @@ public class BookingController {
     public List<Booking> getSortedUsers(){
         return bookingService.getSortedBooking();
     }
-    @PostMapping(path = "/bookings")
-    public Booking createBooking(@RequestBody Booking booking){
-        return bookingService.addBooking(booking);
+    @PostMapping(path = "/bookings/{id}")
+    public Booking createBooking(@PathVariable int id,@RequestBody Booking booking){
+        return bookingService.addBooking(id,booking);
     }
     @PutMapping(path = "/bookings/{id}")
     public Booking updateBooking(@PathVariable int id, @RequestBody Booking booking){

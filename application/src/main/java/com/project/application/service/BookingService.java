@@ -3,7 +3,9 @@ package com.project.application.service;
 
 import com.project.application.model.Booking;
 import com.project.application.model.RentalCompany;
+import com.project.application.model.User;
 import com.project.application.repository.BookingRepository;
+import com.project.application.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,6 +20,8 @@ import java.util.Optional;
 public class BookingService {
     @Autowired
     BookingRepository bookingRepo;
+    @Autowired
+    UserRepository userRepository;
 
     public List<Booking> getBooking() {
         return bookingRepo.findAll();
@@ -27,8 +31,16 @@ public class BookingService {
         return bookingRepo.findById(id);
     }
 
-    public Booking addBooking(Booking booking) {
-        return bookingRepo.save(booking);
+    public Booking addBooking(int id,Booking booking) {
+//        Optional<User> opt= userRepository.findById(id);
+//        if(!opt.isEmpty()){
+//            User user=opt.get();
+//            booking.setUser(user);
+            return bookingRepo.save(booking);
+//        }
+//        else{
+//            throw new RuntimeException("User Not found :"+id);
+//        }
     }
 
     public Booking updateBooking(int id, Booking booking) {
