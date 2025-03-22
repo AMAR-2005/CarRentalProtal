@@ -54,14 +54,14 @@ public class VehicleController {
         return vehicleService.updateVehicle(id,vehicle);
     }
 
-    @PostMapping(path = "/vehicle")
-    public Vehicle createVehicle(@RequestBody Vehicle vehicle) {
-        return vehicleService.createVehicle(vehicle);
+    @PostMapping(path = "/vehicle/{rentalcompanyid}")
+    public Vehicle createVehicle(@PathVariable int rentalcompanyid,@RequestBody Vehicle vehicle) {
+        return vehicleService.createVehicle(rentalcompanyid,vehicle);
     }
 
-    @PostMapping(path = "/vehicle/mutil")
-    public List<Vehicle> createBooking(@RequestBody List<Vehicle> vehicle){
-        return vehicleService.addMultipleVehicle(vehicle);
+    @PostMapping(path = "/vehicle/mutil/{rentalcompanyid}")
+    public List<Vehicle> createBooking(@PathVariable int rentalcompanyid,@RequestBody List<Vehicle> vehicle){
+        return vehicleService.addMultipleVehicle(rentalcompanyid,vehicle);
     }
 
     @DeleteMapping(path = "/vehicle/{id}")

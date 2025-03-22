@@ -1,9 +1,13 @@
 package com.project.application.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import jakarta.persistence.*;
+
+
+import java.util.List;
 
 @Entity
 @Data
@@ -16,39 +20,7 @@ public class RentalCompany {
     private int id;
     private String companyName;
     private String location;
-    //private Vehicle vehicles;
-
-
-//    public RentalCompany() {
-//    }
-//
-//    public int getId() {
-//        return id;
-//    }
-//
-//    public RentalCompany(int id, String companyName, String location) {
-//        this.id = id;
-//        this.companyName = companyName;
-//        this.location = location;
-//    }
-//
-//    public void setId(int id) {
-//        this.id = id;
-//    }
-//
-//    public String getCompanyName() {
-//        return companyName;
-//    }
-//
-//    public void setCompanyName(String companyName) {
-//        this.companyName = companyName;
-//    }
-//
-//    public String getLocation() {
-//        return location;
-//    }
-//
-//    public void setLocation(String location) {
-//        this.location = location;
-//    }
+    @OneToMany(mappedBy = "rentalCompany",cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("rentalCompany")
+    private List<Vehicle> vehicle;
 }

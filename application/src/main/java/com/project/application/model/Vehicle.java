@@ -1,5 +1,6 @@
 package com.project.application.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,5 +25,9 @@ public class Vehicle {
     private String registrationNumber;
     private double ratePerDay;
     private boolean available;
+    @ManyToOne
+    @JoinColumn(name = "rentalcompany_id", nullable = false)
+    @JsonIgnoreProperties("vehicle")
+    private RentalCompany rentalCompany;
 
 }
