@@ -1,8 +1,5 @@
 package com.project.application.controller;
 
-
-import com.project.application.model.Booking;
-import com.project.application.model.User;
 import com.project.application.model.Vehicle;
 import com.project.application.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;

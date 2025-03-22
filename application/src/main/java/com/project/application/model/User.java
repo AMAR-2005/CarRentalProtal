@@ -1,6 +1,8 @@
 package com.project.application.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -21,9 +23,8 @@ public class User {
     private String email;
     @ColumnDefault("0")
     private long phone=0;
-    @ElementCollection
-//    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
-//    @JsonBackReference
-    private List<Integer> bookings;
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("user")
+    private List<Booking> bookings;
 
 }

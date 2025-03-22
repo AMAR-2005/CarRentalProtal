@@ -1,5 +1,6 @@
 package com.project.application.service;
 
+import com.project.application.model.Booking;
 import com.project.application.model.User;
 import com.project.application.model.Vehicle;
 import com.project.application.repository.VehicleRepository;
@@ -8,7 +9,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -64,6 +67,7 @@ public class VehicleService {
         return vehicleRepository.saveAll(vehicle);
     }
     public List<Vehicle> getVehiclesByModel(String model) {
+
         return vehicleRepository.findBymodel(model);
     }
 }

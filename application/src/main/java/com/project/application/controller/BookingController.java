@@ -6,6 +6,7 @@ import com.project.application.service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,18 +36,16 @@ public class BookingController {
     public List<Booking> getSortedUsers(){
         return bookingService.getSortedBooking();
     }
-    @PostMapping(path = "/bookings")
-    public Booking createBooking(@RequestBody Booking booking){
-        return bookingService.addBooking(booking);
-    }
+
     @PostMapping(path = "/bookings/mutil")
     public List<Booking> createBooking(@RequestBody List<Booking> booking){
         return bookingService.addMultipleBooking(booking);
     }
-//    @PostMapping(path = "/bookings/{id}")
-//    public Booking createBooking(@PathVariable int id,@RequestBody Booking booking){
-//        return bookingService.addBooking(id,booking);
-//    }
+    @PostMapping(path = "/bookings/add")
+    public Booking createBookingwithuser(@RequestParam  int userid,@RequestBody Booking booking){
+        return bookingService.addBooking(userid,booking);
+    }
+
     @PutMapping(path = "/bookings/{id}")
     public Booking updateBooking(@PathVariable int id, @RequestBody Booking booking){
         return bookingService.updateBooking(id,booking);
