@@ -1,10 +1,9 @@
 package com.project.application.controller;
 
 
-import com.project.application.model.Booking;
 import com.project.application.model.RentalCompany;
-import com.project.application.model.User;
 import com.project.application.service.RentalCompanyService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -42,22 +41,22 @@ public class RentalCompanyController {
                     .body("Rental Company with ID " + id + " not found"); 
         }
     }
-    @GetMapping(path = "/sortedRental")
+    @GetMapping(path = "/rentalcompanies/sortedRental")
     public List<RentalCompany> getSortedUsers(){
         return rentalCompanyService.getSortedRentalCompanies();
     }
 
     @PostMapping(path = "/rentalcompanies")
-    public RentalCompany createRentalCompany(@RequestBody RentalCompany rentalCompany) {
+    public RentalCompany createRentalCompany(@Valid @RequestBody RentalCompany rentalCompany) {
         return rentalCompanyService.createRentalCompany(rentalCompany);
     }
-    @PostMapping(path = "/rentalcompanies/mutil")
-    public List<RentalCompany> createBooking(@RequestBody List<RentalCompany> rentalcompanies){
+    @PostMapping(path = "/rentalcompanies/multi")
+    public List<RentalCompany> createBooking(@Valid @RequestBody List<RentalCompany> rentalcompanies){
         return rentalCompanyService.addMultipleRentalCompany(rentalcompanies);
     }
 
     @PutMapping(path = "/rentalcompanies/{id}")
-    public ResponseEntity<?> updateRentalCompany(@PathVariable int id, @RequestBody RentalCompany rentalCompany) {
+    public ResponseEntity<?> updateRentalCompany(@PathVariable int id,@Valid  @RequestBody RentalCompany rentalCompany) {
         RentalCompany updatedCompany = rentalCompanyService.updateRentalCompany(id, rentalCompany);
         if (updatedCompany != null) {
             return ResponseEntity.status(HttpStatus.OK).body(updatedCompany);

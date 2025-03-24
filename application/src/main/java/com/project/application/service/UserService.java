@@ -61,7 +61,7 @@ public class UserService {
             if (u.getEmail() != null) {
                 existingUser.setEmail(u.getEmail());
             }
-            if (u.getPhone() != 0) {
+            if (u.getPhone() != "") {
                 existingUser.setPhone(u.getPhone());
             }
             if (u.getBookings() != null) {

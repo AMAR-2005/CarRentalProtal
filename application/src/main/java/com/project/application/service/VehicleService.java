@@ -1,8 +1,6 @@
 package com.project.application.service;
 
-import com.project.application.model.Booking;
 import com.project.application.model.RentalCompany;
-import com.project.application.model.User;
 import com.project.application.model.Vehicle;
 import com.project.application.repository.RentalCompanyRepository;
 import com.project.application.repository.VehicleRepository;
@@ -12,9 +10,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,28 +34,31 @@ public class VehicleService {
         return vehicleRepository.findById(id);
     }
 
-    public Vehicle createVehicle(int rentalCompanyId,Vehicle vehicle) {
-        RentalCompany rentalCompany = rentalCompanyRepository.findById(rentalCompanyId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Rental Company not found with ID: " + rentalCompanyId));
+    public ResponseEntity<?> createVehicle(int rentalCompanyId, Vehicle vehicle) {
 
-        // Associate the vehicle with the rental company
+        RentalCompany rentalCompany = rentalCompanyRepository.findById(rentalCompanyId).orElse(null);
+        if (rentalCompany == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Rental Company not found with ID: " + rentalCompanyId);
+        }
+
         vehicle.setRentalCompany(rentalCompany);
 
-        // Validate required fields
         if (vehicle.getMake() == null || vehicle.getMake().isEmpty()) {
-            throw new IllegalArgumentException("Vehicle make is required");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Vehicle make is required");
         }
         if (vehicle.getModel() == null || vehicle.getModel().isEmpty()) {
-            throw new IllegalArgumentException("Vehicle model is required");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Vehicle model is required");
         }
         if (vehicle.getRegistrationNumber() == null || vehicle.getRegistrationNumber().isEmpty()) {
-            throw new IllegalArgumentException("Vehicle registration number is required");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Vehicle registration number is required");
         }
         if (vehicle.getRatePerDay() <= 0) {
-            throw new IllegalArgumentException("Rate per day must be greater than zero");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Rate per day must be greater than zero");
         }
 
-        return vehicleRepository.save(vehicle);
+        Vehicle savedVehicle = vehicleRepository.save(vehicle);
+        return ResponseEntity.ok(savedVehicle);
     }
 
     public boolean deleteVehicle(int id) {  
@@ -95,14 +98,26 @@ public class VehicleService {
         return vehicleRepository.findAll(pageable);
     }
 
-    public List<Vehicle> addMultipleVehicle(int rentalcompanyid,List<Vehicle> vehicle) {
-        RentalCompany rentalCompany = rentalCompanyRepository.findById(rentalcompanyid)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Rental Company not found with ID: " + rentalcompanyid));
+    public ResponseEntity<?> addMultipleVehicles(List<Vehicle> vehicles) {
+        List<Vehicle> savedVehicles = new ArrayList<>();
 
-        for (Vehicle veh : vehicle) {
-            veh.setRentalCompany(rentalCompany);
+        for (Vehicle vehicle : vehicles) {
+            if (vehicle.getRentalCompany() == null || vehicle.getRentalCompany().getId() == 0) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body("Each vehicle must have a valid rental company ID");
+            }
+
+            RentalCompany rentalCompany = rentalCompanyRepository.findById(vehicle.getRentalCompany().getId()).orElse(null);
+            if (rentalCompany == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("Rental Company not found with ID: " + vehicle.getRentalCompany().getId());
+            }
+
+            vehicle.setRentalCompany(rentalCompany);
+            savedVehicles.add(vehicle);
         }
-        return vehicleRepository.saveAll(vehicle);
+
+        return ResponseEntity.ok(vehicleRepository.saveAll(savedVehicles));
     }
     public List<Vehicle> getVehiclesByModel(String model) {
 

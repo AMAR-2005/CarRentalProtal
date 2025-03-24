@@ -1,14 +1,12 @@
 package com.project.application.controller;
 
 
-import com.project.application.model.Booking;
-import com.project.application.model.RentalCompany;
 import com.project.application.model.User;
 import com.project.application.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,15 +33,15 @@ public class UserController {
         return obj.getUsersById(id);
     }
     @PostMapping(path = "/users")
-    public User createUser(@RequestBody User u){
+    public User createUser(@Valid @RequestBody User u){
         return obj.createUser(u);
     }
-    @PostMapping(path = "/users/mutil")
-    public List<User> createBooking(@RequestBody List<User> user){
+    @PostMapping(path = "/users/multi")
+    public List<User> createBooking(@Valid @RequestBody List<User> user){
         return obj.addMultipleUsers(user);
     }
     @PutMapping(path = "/users/{id}")
-    public User updateUser(@PathVariable int id, @RequestBody User u){
+    public User updateUser(@PathVariable int id, @Valid @RequestBody User u){
         return obj.updateUser(id,u);
     }
 

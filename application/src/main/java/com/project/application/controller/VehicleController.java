@@ -2,6 +2,7 @@ package com.project.application.controller;
 
 import com.project.application.model.Vehicle;
 import com.project.application.service.VehicleService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -50,18 +51,18 @@ public class VehicleController {
         return vehicleService.getVehiclesByModel(model);
     }
     @PutMapping(path = "/vehicle/{id}")
-    public Vehicle updateVehicle(@PathVariable int id,@RequestBody Vehicle vehicle){
+    public Vehicle updateVehicle(@PathVariable int id,@Valid @RequestBody Vehicle vehicle){
         return vehicleService.updateVehicle(id,vehicle);
     }
 
     @PostMapping(path = "/vehicle/{rentalcompanyid}")
-    public Vehicle createVehicle(@PathVariable int rentalcompanyid,@RequestBody Vehicle vehicle) {
+    public ResponseEntity<?> createVehicle(@PathVariable int rentalcompanyid,@Valid @RequestBody Vehicle vehicle) {
         return vehicleService.createVehicle(rentalcompanyid,vehicle);
     }
 
-    @PostMapping(path = "/vehicle/mutil/{rentalcompanyid}")
-    public List<Vehicle> createBooking(@PathVariable int rentalcompanyid,@RequestBody List<Vehicle> vehicle){
-        return vehicleService.addMultipleVehicle(rentalcompanyid,vehicle);
+    @PostMapping(path = "/vehicle/multi")
+    public ResponseEntity<?> createBooking(@Valid @RequestBody List<Vehicle> vehicle){
+        return vehicleService.addMultipleVehicles(vehicle);
     }
 
     @DeleteMapping(path = "/vehicle/{id}")
